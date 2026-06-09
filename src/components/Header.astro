@@ -1,5 +1,6 @@
 ---
 import siteConfig from '../data/site-config.json'
+const basePath = siteConfig.basePath || '/'
 
 const faIcon: Record<string, string> = {
   store: 'fa-store',
@@ -34,13 +35,13 @@ const socialLabel: Record<string, string> = {
     </div>
   )}
   <div class="profile-inner">
-    <a href="/" class="profile-avatar-link" aria-label="Home">
+    <a href={basePath} class="profile-avatar-link" aria-label="Home">
       <div class="profile-avatar">
         <img src={siteConfig.avatar} alt={siteConfig.name} width="88" height="88" />
       </div>
     </a>
 
-    <a href="/" class="profile-name-link"><h1 class="profile-name">{siteConfig.name}</h1></a>
+    <a href={basePath} class="profile-name-link"><h1 class="profile-name">{siteConfig.name}</h1></a>
     <p class="profile-bio">{siteConfig.description}</p>
 
     <a href={siteConfig.address.url} target="_blank" rel="noopener noreferrer" class="profile-address">{siteConfig.address.text}</a>

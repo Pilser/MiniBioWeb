@@ -10,6 +10,7 @@ const allProducts = Array.isArray(products) ? products : []
 const categories = [...new Set(allProducts.map(p => p.category))].sort()
 const catalogData = JSON.stringify(allProducts)
 const siteConfigData = JSON.stringify({ whatsappNumber: siteConfig.whatsappNumber, url: siteConfig.url, whatsappOrderTemplate: siteConfig.whatsappOrderTemplate })
+const siteOrigin = new URL(siteConfig.url).origin
 ---
 
 <BaseLayout
@@ -20,7 +21,7 @@ const siteConfigData = JSON.stringify({ whatsappNumber: siteConfig.whatsappNumbe
       '@type': 'Organization',
       name: siteConfig.name,
       url: siteConfig.url,
-      logo: `${siteConfig.url}${siteConfig.logo}`,
+      logo: `${siteOrigin}${siteConfig.logo}`,
       contactPoint: {
         '@type': 'ContactPoint',
         telephone: siteConfig.contactPhone,

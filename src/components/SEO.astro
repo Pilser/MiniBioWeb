@@ -12,9 +12,10 @@ export interface Props {
 }
 
 const { title, description, canonical, image, type = 'website', noindex, jsonLd } = Astro.props
-const defaultImage = '/favicon.svg'
+const defaultImage = siteConfig.basePath + '/favicon.svg'
 const ogImage = image || defaultImage
-const fullImageUrl = ogImage.startsWith('http') ? ogImage : siteConfig.url + ogImage
+const siteOrigin = new URL(siteConfig.url).origin
+const fullImageUrl = ogImage.startsWith('http') ? ogImage : siteOrigin + ogImage
 ---
 
 <>

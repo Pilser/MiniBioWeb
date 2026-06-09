@@ -43,6 +43,16 @@ function commaSplit(val) {
   return val.split(',').map(s => s.trim()).filter(Boolean)
 }
 
+function getBasePath() {
+  const siteUrl = process.env.SITE_URL || loadEnv().SITE_URL
+  if (!siteUrl || siteUrl.includes('localhost')) return ''
+  try {
+    return new URL(siteUrl).pathname.replace(/\/+$/, '') || ''
+  } catch {
+    return ''
+  }
+}
+
 function parseLinks(val) {
   try {
     return JSON.parse(val)
@@ -62,17 +72,23 @@ function parseSocial(env) {
   return social
 }
 
+function prefixAsset(path, base) {
+  return path && path.startsWith('/') ? base + path : path
+}
+
 const env = loadEnv()
+const base = getBasePath()
 
 const config = {
   name: env.SITE_NAME || 'MiniBio Chemical Supply',
   shortName: env.SITE_SHORT_NAME || 'MiniBio',
   description: env.SITE_DESCRIPTION || '',
   url: env.SITE_URL || 'https://minibioweb.com',
-  logo: env.SITE_LOGO || '/favicon.svg',
-  banner: env.SITE_BANNER || '',
-  avatar: env.SITE_AVATAR || '',
-  favicon: env.SITE_FAVICON || '/favicon.svg',
+  basePath: base || '/',
+  logo: prefixAsset(env.SITE_LOGO || '/favicon.svg', base),
+  banner: prefixAsset(env.SITE_BANNER || '', base),
+  avatar: prefixAsset(env.SITE_AVATAR || '', base),
+  favicon: prefixAsset(env.SITE_FAVICON || '/favicon.svg', base),
   contactEmail: env.CONTACT_EMAIL || '',
   contactPhone: env.CONTACT_PHONE || '',
   whatsappNumber: env.WHATSAPP_NUMBER || '',
