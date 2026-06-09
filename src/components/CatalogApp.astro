@@ -321,17 +321,12 @@ interface Props {}
           <img src="${esc(images[0])}" alt="${esc(product.name)}" id="modal-main-image" />
         </div>
         ${hasMultipleImages ? `
-          <div class="modal-gallery-nav">
-            <button class="gallery-btn gallery-prev" aria-label="Previous image">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <div class="gallery-dots">
-              ${images.map((_, i) => `<span class="gallery-dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`).join('')}
-            </div>
-            <span class="gallery-counter">1 / ${images.length}</span>
-            <button class="gallery-btn gallery-next" aria-label="Next image">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
+          <div class="gallery-thumbs">
+            ${images.map((img, i) => `
+              <button class="gallery-thumb${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Image ${i + 1}">
+                <img src="${esc(img)}" alt="" width="56" height="56" loading="lazy" />
+              </button>
+            `).join('')}
           </div>
         ` : ''}
       </div>
@@ -395,25 +390,16 @@ interface Props {}
       modalImageIndex = index
       mainImg.src = images[index]
       if (hasMultipleImages) {
-        const dots = MODAL_CONTENT.querySelectorAll('.gallery-dot')
-        dots.forEach((d, i) => d.classList.toggle('active', i === index))
-        const counter = MODAL_CONTENT.querySelector('.gallery-counter')
-        if (counter) counter.textContent = `${index + 1} / ${images.length}`
+        var thumbs = MODAL_CONTENT.querySelectorAll('.gallery-thumb')
+        thumbs.forEach(function (t, i) { t.classList.toggle('active', i === index) })
       }
     }
 
     if (hasMultipleImages) {
-      const dots = MODAL_CONTENT.querySelectorAll('.gallery-dot')
-      const prevBtn = MODAL_CONTENT.querySelector('.gallery-prev')
-      const nextBtn = MODAL_CONTENT.querySelector('.gallery-next')
-
-      if (prevBtn) prevBtn.addEventListener('click', () => {
-        showImage(modalImageIndex > 0 ? modalImageIndex - 1 : images.length - 1)
+      var thumbs = MODAL_CONTENT.querySelectorAll('.gallery-thumb')
+      thumbs.forEach(function (t) {
+        t.addEventListener('click', function () { showImage(Number(t.dataset.index)) })
       })
-      if (nextBtn) nextBtn.addEventListener('click', () => {
-        showImage(modalImageIndex < images.length - 1 ? modalImageIndex + 1 : 0)
-      })
-      dots.forEach(d => d.addEventListener('click', () => showImage(Number(d.dataset.index))))
     }
 
     mainImg.addEventListener('click', () => openLightbox(images, modalImageIndex))
@@ -559,13 +545,10 @@ interface Props {}
   }
 
   function whatsAppUrl(product) {
-    const productUrl = `${siteConfig.url}/product/${product.slug}/`
-    const price = product.price || ''
-    const tpl = siteConfig.whatsappOrderTemplate || 'Product: {name}\nID: {id}\nPrice: {price}\nLink: {link}'
+    const productUrl = (window.location.origin || siteConfig.url) + '/product/' + product.slug + '/'
+    const tpl = siteConfig.whatsappOrderTemplate || '{name}\nlink: {link}'
     const msg = tpl
       .replace(/{name}/g, product.name)
-      .replace(/{id}/g, product.id)
-      .replace(/{price}/g, price)
       .replace(/{link}/g, productUrl)
     return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(msg)}`
   }
@@ -948,33 +931,36 @@ interface Props {}
     object-fit: contain;
   }
 
-  .modal-gallery-nav {
+  .gallery-thumbs {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 0 16px 12px;
+    gap: 6px;
+    padding: 4px 16px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .gallery-btn {
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    background: white;
-    border-radius: 50%;
-    box-shadow: var(--shadow-sm);
+  .gallery-thumbs::-webkit-scrollbar { display: none; }
+
+  .gallery-thumb {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid var(--gray-200);
+    background: var(--gray-100);
     cursor: pointer;
-    color: var(--gray-600);
-    transition: background 0.2s;
+    padding: 0;
+    transition: border-color 0.15s;
   }
-  .gallery-btn:hover { background: var(--gray-100); }
-  .gallery-dots { display: flex; gap: 6px; }
-  .gallery-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--gray-300);
-    cursor: pointer;
-    transition: background 0.2s;
+  .gallery-thumb.active { border-color: var(--gray-900); }
+  .gallery-thumb:hover { border-color: var(--gray-500); }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
   }
-  .gallery-dot.active { background: var(--gray-900); }
 
   .modal-details { padding-top: 20px; }
   .modal-category {

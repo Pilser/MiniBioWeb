@@ -1,35 +1,34 @@
 {
-  "name": "MiniBio Chemical Supply",
-  "shortName": "MiniBio",
-  "description": "Premium chemical and laboratory supplies for industrial, agricultural, and research applications.",
-  "url": "https://minibioweb.com",
-  "logo": "/favicon.svg",
-  "banner": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80",
-  "avatar": "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=200&q=80",
-  "favicon": "/favicon.svg",
-  "contactEmail": "info@pilserlabs.com",
-  "contactPhone": "+256755304241",
-  "whatsappNumber": "0755304241",
+  "name": "Gadget Junction Uganda",
+  "shortName": "Gadget Junction",
+  "description": "All about Gadgets eg. laptops,desktops, accessories, computer monitors etc.  under one umbrella",
+  "url": "http://localhost:4321",
+  "logo": "http://localhost:4321/favicon.svg",
+  "banner": "http://localhost:4321/banner.jpg",
+  "avatar": "http://localhost:4321/avator.svg",
+  "favicon": "http://localhost:4321/favicon.svg",
+  "contactEmail": "yusufcomputer3@gmail.com",
+  "contactPhone": "+256776711982",
+  "whatsappNumber": "+256776711982",
   "whatsappMessage": "Found this product from your site.",
-  "whatsappOrderTemplate": "Product: {name}\nProduct ID: {id}\nPrice: {price}\nProduct link: {link}",
+  "whatsappOrderTemplate": "{name}\nlink: {link}",
   "address": {
-    "text": "123 Industrial Blvd, Suite 100, Miami, FL 33101",
-    "url": "https://maps.google.com/?q=123+Industrial+Blvd+Suite+100+Miami+FL+33101"
+    "text": "Nalubega Complex Shop No.B31 Opposite Watoto Church",
+    "url": "https://share.google/LDFp1zW6hVDnXXcao"
   },
   "categories": [
     "All",
-    "Chemicals",
-    "Laboratory",
-    "Industrial",
-    "Cleaning",
-    "Agriculture",
-    "Oils",
-    "Reagents"
+    "Computers",
+    "Laptops",
+    "Desktops",
+    "Gadgets",
+    "Acessories",
+    "Computer-Repair."
   ],
   "social": {
-    "instagram": "https://instagram.com/minibioweb",
-    "facebook": "https://facebook.com/minibioweb",
-    "tiktok": "https://tiktok.com/@minibioweb"
+    "instagram": "https://instagram.com/gadgetjunction",
+    "facebook": "https://facebook.com/gadgetunctionug",
+    "tiktok": "https://tiktok.com/@gadget_junction_ug"
   },
   "links": [
     {

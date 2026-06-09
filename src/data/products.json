@@ -1,29 +1,33 @@
 [
   {
-    "id": "CH-001",
-    "name": "Sodium Hydroxide",
-    "slug": "sodium-hydroxide",
-    "category": "Chemicals",
-    "description": "High-purity sodium hydroxide (NaOH) in white pellet form. Suitable for industrial cleaning, pH adjustment, soap manufacturing, and laboratory applications. Available in multiple grades including technical, reagent, and USP grades.",
-    "summary": "High-purity NaOH pellets for industrial and laboratory use",
-    "price": "$28.50 /kg",
-    "unit": "kg",
-    "image": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80",
+    "id": "P-001",
+    "name": "Laptop HP Pavilion 14 X360 Intel i5 1335U 1.30GHz 13th Gen",
+    "slug": "Laptop-HP-Pavilion-14-X360-i5-13th-Gen",
+    "category": "Laptops",
+    "description": "- Good laptop for Day Today work",
+    "summary": "Get your self this laptop",
+    "price": null,
+    "unit": null,
+    "image": "http://localhost:4321/images/Hp-pavilion-14-x360-i5/1.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80",
-      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&q=80"
+      "http://localhost:4321/images/Hp-pavilion-14-x360-i5/2.jpg",
+      "http://localhost:4321/images/Hp-pavilion-14-x360-i5/3.jpg",
+      "http://localhost:4321/images/Hp-pavilion-14-x360-i5/4.jpg",
+      "http://localhost:4321/images/Hp-pavilion-14-x360-i5/5.jpg"
     ],
     "tags": [
-      "industrial",
-      "cleaning",
-      "ph-adjustment",
-      "soap-making"
+      "laptops",
+      "hp",
+      "affodable",
+      "computer"
     ],
     "specifications": {
-      "Purity": "≥98%",
-      "Grade": "Technical",
-      "Form": "White Pellets",
-      "Packaging": "25 kg bag"
+      "Brand": "HP",
+      "CPU": "Intel i5 1335U 1.30GHz",
+      "GPU": "Iris Xe 8GB dedicated & 8GB Shared",
+      "RAM": "DDR4 16GB",
+      "STORAGE": "NVMe 512GB SSD",
+      "Display": "14\" FHD Screan size"
     }
   },
   {
