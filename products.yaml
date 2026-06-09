@@ -7,12 +7,12 @@
   summary: Get your self this laptop
   price:
   unit:
-  image: http://localhost:4321/images/Hp-pavilion-14-x360-i5/1.jpg
+  image: /images/Hp-pavilion-14-x360-i5/1.jpg
   images:
-    - http://localhost:4321/images/Hp-pavilion-14-x360-i5/2.jpg
-    - http://localhost:4321/images/Hp-pavilion-14-x360-i5/3.jpg
-    - http://localhost:4321/images/Hp-pavilion-14-x360-i5/4.jpg
-    - http://localhost:4321/images/Hp-pavilion-14-x360-i5/5.jpg
+    - /images/Hp-pavilion-14-x360-i5/2.jpg
+    - /images/Hp-pavilion-14-x360-i5/3.jpg
+    - /images/Hp-pavilion-14-x360-i5/4.jpg
+    - /images/Hp-pavilion-14-x360-i5/5.jpg
   tags:
     - laptops
     - hp
@@ -26,681 +26,342 @@
     STORAGE: NVMe 512GB SSD
     Display: 14" FHD Screan size
 
-- id: CH-002
-  name: Hydrochloric Acid
-  slug: hydrochloric-acid
-  category: Chemicals
+- id: P-002
+  name: EliteBook 820G3
+  slug: elitebook-820-g3
+  category: Laptops
   description: >-
-    Concentrated hydrochloric acid (HCl) 37% solution. Essential for pH regulation, metal cleaning, ore processing, and
-    laboratory analysis. Supplied in high-density polyethylene containers.
-  summary: Concentrated HCl 37% for industrial processing and analysis
-  price: $15.75 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1604871000636-074fa5117945?w=600&q=80
+    - Compact 12.5" business ultrabook with reliable performance
+  summary: HP EliteBook 820 G3 Intel Core i5 business laptop
+  price:
+  unit:
+  image: /images/elitebook-820-g3/1.jpg
   images:
-    - https://images.unsplash.com/photo-1604871000636-074fa5117945?w=600&q=80
+    - /images/elitebook-820-g3/2.jpg
+    - /images/elitebook-820-g3/3.jpg
+    - /images/elitebook-820-g3/4.jpg
+    - /images/elitebook-820-g3/5.jpg
   tags:
-    - industrial
-    - cleaning
-    - laboratory
-    - metal-processing
+    - laptops
+    - hp
+    - business
+    - ultrabook
   specifications:
-    Concentration: 37%
-    Grade: Reagent
-    Form: Liquid
-    Packaging: 2.5 L bottle
-- id: CH-003
-  name: Sulfuric Acid
-  slug: sulfuric-acid
-  category: Chemicals
+    Brand: HP
+    CPU: Intel Core i5-6200U 2.3GHz (6th Gen)
+    GPU: Intel HD Graphics 520
+    RAM: DDR4 8GB
+    STORAGE: 256GB SSD
+    Display: 12.5" FHD (1920x1080)
+
+- id: P-003
+  name: HP Omen 16
+  slug: hp-omen-16
+  category: Laptops
   description: >-
-    Concentrated sulfuric acid (H₂SO₄) 98% reagent grade. Widely used in chemical synthesis, battery manufacturing,
-    water treatment, and petroleum refining. Handle with care — highly corrosive.
-  summary: Reagent grade H₂SO₄ 98% for synthesis and industrial use
-  price: $22.00 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=600&q=80
+    - Powerful gaming laptop with high-performance graphics
+  summary: HP Omen 16 Intel Core i5 gaming laptop with RTX graphics
+  price:
+  unit:
+  image: /images/hp-omen-16/1.jpg
   images:
-    - https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=600&q=80
+    - /images/hp-omen-16/2.jpg
+    - /images/hp-omen-16/3.jpg
+    - /images/hp-omen-16/4.jpg
   tags:
-    - industrial
-    - laboratory
-    - synthesis
-    - battery
+    - laptops
+    - hp
+    - gaming
+    - high-performance
   specifications:
-    Purity: 98%
-    Grade: Reagent ACS
-    Form: Liquid
-    Packaging: 2.5 L bottle
-- id: CH-004
-  name: Ethanol Absolute
-  slug: ethanol-absolute
-  category: Chemicals
+    Brand: HP
+    CPU: Intel Core i5-13420H (13th Gen)
+    GPU: NVIDIA GeForce RTX 4050 6GB
+    RAM: DDR5 16GB
+    STORAGE: 512GB NVMe SSD
+    Display: 16.1" FHD (1920x1080) 144Hz
+
+- id: P-004
+  name: ThinkBook 14 G4 IAP
+  slug: thinkbook-14-g4-iap
+  category: Laptops
   description: >-
-    Anhydrous ethanol (C₂H₅OH) 99.9% purity. Ideal for pharmaceutical applications, laboratory solvent, cleaning
-    electronics, and fuel blending. Free from denaturants.
-  summary: Anhydrous ethanol 99.9% for pharmaceutical and lab use
-  price: $35.00 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=600&q=80
+    - Slim and powerful business laptop for everyday productivity
+  summary: Lenovo ThinkBook 14 G4 IAP Intel Core i5 business laptop
+  price:
+  unit:
+  image: /images/thinkbook-14-g4-iap/1.jpg
   images:
-    - https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=600&q=80
-    - https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=600&q=80
+    - /images/thinkbook-14-g4-iap/2.jpg
+    - /images/thinkbook-14-g4-iap/3.jpg
+    - /images/thinkbook-14-g4-iap/4.jpg
   tags:
-    - laboratory
-    - pharmaceutical
-    - cleaning
-    - solvent
+    - laptops
+    - lenovo
+    - business
+    - thin-and-light
   specifications:
-    Purity: ≥99.9%
-    Grade: ACS Reagent
-    Form: Liquid
-    Packaging: 1 L bottle
-- id: LB-001
-  name: Digital Analytical Balance
-  slug: digital-analytical-balance
-  category: Laboratory
+    Brand: Lenovo
+    CPU: Intel Core i5-1235U (12th Gen)
+    GPU: Intel Iris Xe Graphics
+    RAM: DDR4 8GB
+    STORAGE: 512GB NVMe SSD
+    Display: 14" FHD (1920x1080) IPS
+
+- id: P-005
+  name: DELL Latitude 5290
+  slug: dell-latitude-5290
+  category: Laptops
   description: >-
-    Precision digital analytical balance with 0.0001 g readability. Features automatic calibration, draft shield, LCD
-    display, and RS232 interface. Essential for analytical chemistry and quality control laboratories.
-  summary: High-precision balance with 0.1 mg readability for lab work
-  price: $850.00 /unit
-  unit: unit
-  image: https://images.unsplash.com/photo-1588392382834-a891154bca4d?w=600&q=80
+    - Durable and secure business laptop with compact design
+  summary: DELL Latitude 5290 Intel Core i5 business laptop
+  price:
+  unit:
+  image: /images/dell-latitude-5290/1.jpg
   images:
-    - https://images.unsplash.com/photo-1588392382834-a891154bca4d?w=600&q=80
-    - https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=600&q=80
-    - https://images.unsplash.com/photo-1582719189399-5a39a2f4b7e0?w=600&q=80
+    - /images/dell-latitude-5290/2.jpg
+    - /images/dell-latitude-5290/3.jpg
+    - /images/dell-latitude-5290/4.jpg
+    - /images/dell-latitude-5290/5.jpg
   tags:
-    - precision
-    - analytical
-    - quality-control
-    - weighing
+    - laptops
+    - dell
+    - business
+    - portable
   specifications:
-    Capacity: 220 g
-    Readability: 0.0001 g
-    Calibration: Automatic Internal
-    Pan Size: 90 mm
-- id: LB-002
-  name: Borosilicate Glass Beaker Set
-  slug: borosilicate-glass-beaker-set
-  category: Laboratory
+    Brand: DELL
+    CPU: Intel Core i5-8350U (8th Gen)
+    GPU: Intel UHD Graphics 620
+    RAM: DDR4 8GB
+    STORAGE: 256GB SSD
+    Display: 12.5" HD (1366x768)
+
+- id: P-006
+  name: Google Chromebook X360
+  slug: google-chromebook-x360
+  category: Laptops
   description: >-
-    Set of 6 borosilicate glass beakers (50, 100, 250, 500, 1000, 2000 mL). Heat-resistant up to 500°C, low thermal
-    expansion, and excellent chemical durability. Graduated markings for approximate measurements.
-  summary: Set of 6 heat-resistant borosilicate glass beakers
-  price: $45.00 /set
-  unit: set
-  image: https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&q=80
+    - Versatile Chromebook with 360° hinge and touchscreen
+  summary: HP Chromebook x360 Intel Core i5 convertible with touchscreen
+  price:
+  unit:
+  image: /images/google-chromebook-x360/1.jpg
   images:
-    - https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&q=80
+    - /images/google-chromebook-x360/2.jpg
+    - /images/google-chromebook-x360/3.jpg
+    - /images/google-chromebook-x360/4.jpg
+    - /images/google-chromebook-x360/5.jpg
+    - /images/google-chromebook-x360/6.jpg
   tags:
-    - glassware
-    - measuring
-    - heat-resistant
-    - basic-equipment
+    - laptops
+    - hp
+    - chromebook
+    - touchscreen
+    - convertible
   specifications:
-    Material: Borosilicate Glass 3.3
-    Sizes: 50–2000 mL
-    Max Temp: 500°C
-    Includes: 6 pieces
-- id: LB-003
-  name: Micropipette Variable Volume
-  slug: micropipette-variable-volume
-  category: Laboratory
+    Brand: HP
+    CPU: Intel Core i5-1235U (12th Gen)
+    GPU: Intel Iris Xe Graphics
+    RAM: LPDDR4x 8GB
+    STORAGE: 256GB NVMe SSD
+    Display: 14" FHD (1920x1080) Touch IPS
+
+- id: P-007
+  name: HP Pavilion Gaming 15
+  slug: hp-pavilion-gaming-15
+  category: Laptops
   description: >-
-    Ergonomic variable volume micropipette covering 100–1000 µL range. Features digital volume display, smooth plunger
-    action, autoclavable tip ejector, and calibration tool. Compatible with standard tips.
-  summary: Ergonomic variable micropipette 100–1000 µL for precise liquid handling
-  price: $195.00 /unit
-  unit: unit
-  image: https://images.unsplash.com/photo-1582719189399-5a39a2f4b7e0?w=600&q=80
+    - Entry-level gaming laptop with dedicated graphics
+  summary: HP Pavilion Gaming 15 Intel Core i5 with GTX graphics
+  price:
+  unit:
+  image: /images/hp-pavilion-gaming-15/1.jpeg
   images:
-    - https://images.unsplash.com/photo-1582719189399-5a39a2f4b7e0?w=600&q=80
+    - /images/hp-pavilion-gaming-15/2.jpeg
   tags:
-    - precision
-    - liquid-handling
-    - ergonomic
-    - autoclavable
+    - laptops
+    - hp
+    - gaming
+    - entry-level
   specifications:
-    Volume Range: 100–1000 µL
-    Increment: 1 µL
-    Accuracy: ±0.5%
-    Autoclavable: Yes
-- id: IN-001
-  name: Industrial Grade Acetone
-  slug: industrial-grade-acetone
-  category: Industrial
+    Brand: HP
+    CPU: Intel Core i5-10300H (10th Gen)
+    GPU: NVIDIA GeForce GTX 1650 Ti 4GB
+    RAM: DDR4 8GB
+    STORAGE: 512GB NVMe SSD
+    Display: 15.6" FHD (1920x1080) IPS
+
+- id: P-008
+  name: HP ZBook 24-inch Monitor
+  slug: hp-zbook-24-inch-monitor
+  category: Laptops
   description: >-
-    High-purity industrial acetone for degreasing, cleaning, and solvent applications. Fast-evaporating with excellent
-    solvency for oils, resins, and adhesives. Suitable for manufacturing and maintenance operations.
-  summary: Fast-evaporating industrial acetone for degreasing and cleaning
-  price: $12.50 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=600&q=80
+    - Professional-grade 24-inch IPS monitor for workstations
+  summary: HP ZBook 24-inch IPS Monitor with Full HD display
+  price:
+  unit:
+  image: /images/hp-zbook-24-inch-monitor/1.jpg
   images:
-    - https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=600&q=80
+    - /images/hp-zbook-24-inch-monitor/2.jpg
+    - /images/hp-zbook-24-inch-monitor/3.jpg
+    - /images/hp-zbook-24-inch-monitor/4.jpg
+    - /images/hp-zbook-24-inch-monitor/5.jpg
   tags:
-    - solvent
-    - degreasing
-    - cleaning
-    - manufacturing
+    - monitors
+    - hp
+    - display
+    - workstation
   specifications:
-    Purity: ≥99.5%
-    Grade: Industrial
-    Form: Liquid
-    Packaging: 20 L pail
-- id: IN-002
-  name: Silicone Industrial Lubricant
-  slug: silicone-industrial-lubricant
-  category: Industrial
+    Brand: HP
+    Size: 24" IPS
+    Resolution: Full HD (1920x1080)
+    Brightness: 300 nits
+    Contrast: 1000:1
+    Panel: IPS Anti-glare
+
+- id: P-009
+  name: HP ZBook Firefly 14 G8
+  slug: hp-zbook-firefly-14-g8
+  category: Laptops
   description: >-
-    High-temperature silicone lubricant spray for industrial machinery and equipment. Withstands temperatures from -50°C
-    to 230°C. Food-grade formulation safe for incidental food contact. Water-resistant and long-lasting.
-  summary: High-temp silicone lubricant spray for industrial machinery
-  price: $18.95 /can (400 mL)
-  unit: can (400 mL)
-  image: https://images.unsplash.com/photo-1620066241535-50b0f6e6e6b0?w=600&q=80
+    - Premium mobile workstation with professional-grade performance
+  summary: HP ZBook Firefly 14 G8 Intel Core i5 mobile workstation
+  price:
+  unit:
+  image: /images/hp-zbook-firefly-14-g8/1.jpg
   images:
-    - https://images.unsplash.com/photo-1620066241535-50b0f6e6e6b0?w=600&q=80
+    - /images/hp-zbook-firefly-14-g8/2.jpg
+    - /images/hp-zbook-firefly-14-g8/3.jpg
+    - /images/hp-zbook-firefly-14-g8/4.jpg
+    - /images/hp-zbook-firefly-14-g8/5.jpg
   tags:
-    - lubricant
-    - high-temperature
-    - food-grade
-    - machinery
+    - laptops
+    - hp
+    - workstation
+    - business
+    - mobile-workstation
   specifications:
-    Temp Range: "-50°C to 230°C"
-    Grade: Food Grade NSF H1
-    Form: Aerosol Spray
-    Net Weight: 400 mL
-- id: IN-003
-  name: Polypropylene Storage Tanks
-  slug: polypropylene-storage-tanks
-  category: Industrial
+    Brand: HP
+    CPU: Intel Core i5-1145G7 (11th Gen)
+    GPU: Intel Iris Xe Graphics
+    RAM: DDR4 16GB
+    STORAGE: 256GB NVMe SSD
+    Display: 14" FHD (1920x1080) IPS
+
+- id: P-010
+  name: ThinkPad X1 Carbon Gen 8
+  slug: thinkpad-x1-carbon-gen-8
+  category: Laptops
   description: >-
-    Heavy-duty polypropylene tanks for chemical storage and processing. UV-stabilized, corrosion-resistant, and
-    weldable. Suitable for acids, alkalis, and many organic solvents. Available in multiple capacities.
-  summary: Corrosion-resistant PP tanks for chemical storage and processing
-  price: $245.00 /tank (200 L)
-  unit: tank (200 L)
-  image: https://images.unsplash.com/photo-1565008447742-97f6a38fdc6c?w=600&q=80
+    - Ultra-light premium business laptop with carbon fiber build
+  summary: Lenovo ThinkPad X1 Carbon Gen 8 Intel Core i5 ultrabook
+  price:
+  unit:
+  image: /images/thinkpad-x1-carbon-gen-8/1.jpg
   images:
-    - https://images.unsplash.com/photo-1565008447742-97f6a38fdc6c?w=600&q=80
+    - /images/thinkpad-x1-carbon-gen-8/2.jpg
+    - /images/thinkpad-x1-carbon-gen-8/3.jpg
+    - /images/thinkpad-x1-carbon-gen-8/4.jpg
+    - /images/thinkpad-x1-carbon-gen-8/5.jpg
   tags:
-    - storage
-    - corrosion-resistant
-    - chemical
-    - processing
+    - laptops
+    - lenovo
+    - thinkpad
+    - business
+    - ultrabook
   specifications:
-    Material: Polypropylene (PP)
-    Capacity: 200 L
-    UV Stabilized: Yes
-    Max Temp: 80°C
-- id: CL-001
-  name: Industrial Degreaser Concentrate
-  slug: industrial-degreaser-concentrate
-  category: Cleaning
+    Brand: Lenovo
+    CPU: Intel Core i5-10210U (10th Gen)
+    GPU: Intel UHD Graphics
+    RAM: LPDDR3 8GB
+    STORAGE: 256GB NVMe SSD
+    Display: 14" FHD (1920x1080) IPS
+
+- id: P-011
+  name: ThinkPad X360 Yoga
+  slug: thinkpad-x360-yoga
+  category: Laptops
   description: >-
-    Heavy-duty alkaline degreaser concentrate for industrial cleaning. Effectively removes grease, oil, carbon deposits,
-    and wax from metal surfaces. Biodegradable formulation. Dilute 1:10 to 1:20 for use.
-  summary: Biodegradable alkaline degreaser concentrate for heavy-duty cleaning
-  price: $32.00 /gal
-  unit: gal
-  image: https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=600&q=80
+    - Premium 2-in-1 convertible laptop with touchscreen and pen support
+  summary: Lenovo ThinkPad X360 Yoga Intel Core i5 convertible
+  price:
+  unit:
+  image: /images/thinkpad-x360-yoga/1.jpg
   images:
-    - https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=600&q=80
+    - /images/thinkpad-x360-yoga/2.jpg
+    - /images/thinkpad-x360-yoga/3.jpg
+    - /images/thinkpad-x360-yoga/4.jpg
+    - /images/thinkpad-x360-yoga/5.jpg
   tags:
-    - degreaser
-    - industrial
-    - biodegradable
-    - concentrate
+    - laptops
+    - lenovo
+    - thinkpad
+    - convertible
+    - touchscreen
+    - business
   specifications:
-    Type: Alkaline Concentrate
-    Dilution: 1:10–1:20
-    Biodegradable: Yes
-    Packaging: 5 gal pail
-- id: CL-002
-  name: Laboratory Glassware Cleaner
-  slug: laboratory-glassware-cleaner
-  category: Cleaning
+    Brand: Lenovo
+    CPU: Intel Core i5-1135G7 (11th Gen)
+    GPU: Intel Iris Xe Graphics
+    RAM: LPDDR4x 16GB
+    STORAGE: 512GB NVMe SSD
+    Display: 14" FHD (1920x1080) IPS Touch
+
+- id: P-012
+  name: ThinkPad Yoga X390
+  slug: thinkpad-yoga-x390
+  category: Laptops
   description: >-
-    Specialized laboratory glassware cleaning solution. Removes organic residues, proteins, and nucleic acids without
-    leaving traces. Phosphate-free and low-foaming. Ideal for volumetric glassware and precision instruments.
-  summary: Phosphate-free lab glassware cleaner for residue-free results
-  price: $24.50 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80
+    - Compact 13.3" convertible laptop for professionals on the go
+  summary: Lenovo ThinkPad Yoga X390 Intel Core i5 convertible
+  price:
+  unit:
+  image: /images/thinkpad-yoga-x390/1.jpg
   images:
-    - https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80
+    - /images/thinkpad-yoga-x390/2.jpg
+    - /images/thinkpad-yoga-x390/3.jpg
+    - /images/thinkpad-yoga-x390/4.jpg
+    - /images/thinkpad-yoga-x390/5.jpg
   tags:
-    - laboratory
-    - glassware
-    - phosphate-free
-    - precision-cleaning
+    - laptops
+    - lenovo
+    - thinkpad
+    - convertible
+    - touchscreen
+    - business
   specifications:
-    Type: Liquid Concentrate
-    pH: Neutral
-    Phosphate-Free: Yes
-    Packaging: 1 L bottle
-- id: AG-001
-  name: Liquid Nitrogen Fertilizer
-  slug: liquid-nitrogen-fertilizer
-  category: Agriculture
+    Brand: Lenovo
+    CPU: Intel Core i5-8265U (8th Gen)
+    GPU: Intel UHD Graphics 620
+    RAM: DDR4 8GB
+    STORAGE: 256GB NVMe SSD
+    Display: 13.3" FHD (1920x1080) IPS Touch
+
+- id: P-013
+  name: ThinkPad T14s Gen 2
+  slug: thinkpad-t14s-gen-2
+  category: Laptops
   description: >-
-    High-efficiency liquid nitrogen fertilizer (32% N) for agricultural crops. Contains urea and ammonium nitrate in
-    solution. Provides rapid nitrogen uptake, uniform application, and excellent crop response. Suitable for fertigation
-    systems.
-  summary: UAN 32% liquid nitrogen fertilizer for fertigation and foliar feeding
-  price: $18.00 /gal
-  unit: gal
-  image: https://images.unsplash.com/photo-1585247226801-b6130cf0b46a?w=600&q=80
+    - Lightweight business laptop with Intel Evo platform
+  summary: Lenovo ThinkPad T14s Gen 2 Intel Core i5 business laptop
+  price:
+  unit:
+  image: /images/thinkpad-t14s-gen-2/1.jpg
   images:
-    - https://images.unsplash.com/photo-1585247226801-b6130cf0b46a?w=600&q=80
+    - /images/thinkpad-t14s-gen-2/2.jpg
+    - /images/thinkpad-t14s-gen-2/3.jpg
+    - /images/thinkpad-t14s-gen-2/4.jpg
+    - /images/thinkpad-t14s-gen-2/5.jpg
   tags:
-    - fertilizer
-    - nitrogen
-    - fertigation
-    - crops
+    - laptops
+    - lenovo
+    - thinkpad
+    - business
+    - portable
   specifications:
-    Nitrogen Content: 32% (UAN)
-    Form: Liquid Solution
-    Application: Fertigation / Foliar
-    Packaging: 275 gal tote
-- id: AG-002
-  name: Potassium Sulfate SOP
-  slug: potassium-sulfate-sop
-  category: Agriculture
-  description: >-
-    Water-soluble potassium sulfate (K₂SO₄) 0-0-50. Chloride-free potassium source for sensitive crops including fruits,
-    vegetables, and tobacco. Ideal for drip irrigation and foliar application. Improves crop quality and yield.
-  summary: Chloride-free potassium sulfate 0-0-50 for high-value crops
-  price: $42.00 /25 kg bag
-  unit: 25 kg bag
-  image: https://images.unsplash.com/photo-1615457289255-2af0c7effa28?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1615457289255-2af0c7effa28?w=600&q=80
-  tags:
-    - fertilizer
-    - potassium
-    - chloride-free
-    - soluble
-  specifications:
-    K₂O: 50%
-    S: 18%
-    Chloride: <1%
-    Solubility: 120 g/L at 20°C
-- id: OI-001
-  name: Palm Oil
-  slug: palm-oil
-  category: Oils
-  description: >-
-    Refined, bleached, and deodorized palm oil (RBD). Neutral taste and pale yellow color. Ideal for food manufacturing,
-    soap making, oleochemical production, and biofuel feedstock. High oxidative stability.
-  summary: RBD palm oil for food, soap, and oleochemical applications
-  price: $1.85 /kg
-  unit: kg
-  image: https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?w=600&q=80
-    - https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=600&q=80
-  tags:
-    - edible
-    - soap-making
-    - oleochemical
-    - biofuel
-  specifications:
-    Type: RBD Palm Oil
-    FFA: <0.1%
-    IV: 50–55
-    Packaging: 20 kg jerry can
-- id: OI-002
-  name: Coconut Oil Virgin
-  slug: coconut-oil-virgin
-  category: Oils
-  description: >-
-    Cold-pressed virgin coconut oil (VCO) from fresh mature coconuts. No chemical refining, bleaching, or deodorizing.
-    Rich in medium-chain triglycerides (MCTs). Perfect for cosmetic formulations, cooking, and health products.
-  summary: Cold-pressed virgin coconut oil for cosmetic and culinary use
-  price: $9.50 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=600&q=80
-  tags:
-    - cold-pressed
-    - cosmetic
-    - edible
-    - mct
-  specifications:
-    Extraction: Cold-Pressed
-    Free Fatty Acids: <0.5%
-    Moisture: <0.1%
-    Packaging: 1 L bottle
-- id: OI-003
-  name: Essential Oil Eucalyptus
-  slug: essential-oil-eucalyptus
-  category: Oils
-  description: >-
-    100% pure eucalyptus globulus essential oil. Steam-distilled from fresh leaves. High 1,8-cineole content (minimum
-    70%). Used in aromatherapy, respiratory care, cleaning products, and insect repellent formulations.
-  summary: Pure eucalyptus globulus essential oil 70%+ cineole
-  price: $14.25 /100 mL
-  unit: 100 mL
-  image: https://images.unsplash.com/photo-1589923188900-85dae523342b?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1589923188900-85dae523342b?w=600&q=80
-  tags:
-    - essential-oil
-    - aromatherapy
-    - natural
-    - cleaning
-  specifications:
-    Botanical Name: Eucalyptus globulus
-    1,8-Cineole: ≥70%
-    Extraction: Steam Distillation
-    Packaging: 100 mL amber bottle
-- id: RG-001
-  name: Sodium Chloride AR
-  slug: sodium-chloride-ar
-  category: Reagents
-  description: >-
-    Analytical reagent grade sodium chloride (NaCl) with ≥99.9% purity. Low heavy metal content. Suitable for analytical
-    chemistry, buffer preparation, and pharmaceutical formulations. Meets ACS specifications.
-  summary: ACS reagent grade sodium chloride 99.9%+ for analysis
-  price: $8.50 /500 g
-  unit: 500 g
-  image: https://images.unsplash.com/photo-1584791019097-4e3b0c2baa1c?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1584791019097-4e3b0c2baa1c?w=600&q=80
-  tags:
-    - acs-grade
-    - analytical
-    - buffer
-    - pharmaceutical
-  specifications:
-    Purity: ≥99.9%
-    Grade: ACS Reagent
-    Heavy Metals: <5 ppm
-    Packaging: 500 g bottle
-- id: RG-002
-  name: Copper Sulfate Pentahydrate
-  slug: copper-sulfate-pentahydrate
-  category: Reagents
-  description: >-
-    High-purity copper(II) sulfate pentahydrate (CuSO₄·5H₂O) blue crystalline powder. Used in analytical chemistry,
-    agriculture as fungicide, electroplating, and educational demonstrations. Minimum 98% purity.
-  summary: Blue crystalline CuSO₄·5H₂O for analysis and agriculture
-  price: $16.75 /500 g
-  unit: 500 g
-  image: https://images.unsplash.com/photo-1565859604283-22f26250b041?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1565859604283-22f26250b041?w=600&q=80
-  tags:
-    - analytical
-    - agriculture
-    - fungicide
-    - crystal
-  specifications:
-    Purity: ≥98%
-    Grade: Reagent
-    Form: Blue Crystalline Powder
-    Packaging: 500 g bottle
-- id: RG-003
-  name: Potassium Permanganate
-  slug: potassium-permanganate
-  category: Reagents
-  description: >-
-    Analytical grade potassium permanganate (KMnO₄) dark purple crystals. Strong oxidizing agent for analytical
-    titration, water treatment, organic synthesis, and disinfection. Store away from organic materials.
-  summary: Deep purple KMnO₄ crystals for analytical titration and water treatment
-  price: $22.00 /500 g
-  unit: 500 g
-  image: https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=80
-  tags:
-    - oxidizing-agent
-    - analytical
-    - water-treatment
-    - titration
-  specifications:
-    Purity: ≥99%
-    Grade: ACS Reagent
-    Form: Dark Purple Crystals
-    Packaging: 500 g bottle
-- id: CH-005
-  name: Nitric Acid
-  slug: nitric-acid
-  category: Chemicals
-  description: >-
-    Concentrated nitric acid (HNO₃) 70% reagent grade. Strong oxidizing acid essential for nitration reactions, metal
-    etching, water analysis, and fertilizer production. Supplied in amber glass bottles.
-  summary: Reagent grade HNO₃ 70% for nitration and metal etching
-  price: $29.00 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1613160717883-71a2c6fb2bca?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1613160717883-71a2c6fb2bca?w=600&q=80
-  tags:
-    - oxidizing-acid
-    - nitration
-    - etching
-    - fertilizer
-  specifications:
-    Concentration: 70%
-    Grade: Reagent ACS
-    Form: Liquid
-    Packaging: 2.5 L bottle
-- id: LB-004
-  name: Laboratory Oven
-  slug: laboratory-oven
-  category: Laboratory
-  description: >-
-    Forced air circulation laboratory oven with digital temperature control. Range from ambient +10°C to 300°C.
-    Stainless steel interior, programmable timer, and over-temperature protection. Ideal for drying, curing, and aging
-    tests.
-  summary: Forced-air lab oven, digital control, ambient+10°C to 300°C
-  price: $1450.00 /unit
-  unit: unit
-  image: https://images.unsplash.com/photo-1590633276544-1672cc7d3d84?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1590633276544-1672cc7d3d84?w=600&q=80
-  tags:
-    - drying
-    - curing
-    - digital-control
-    - stainless-steel
-  specifications:
-    Temp Range: Ambient+10°C to 300°C
-    Capacity: 80 L
-    Material: Stainless Steel
-    Features: Digital Timer, Over-Temp Protection
-- id: IN-004
-  name: Citric Acid Anhydrous
-  slug: citric-acid-anhydrous
-  category: Industrial
-  description: >-
-    Anhydrous citric acid in fine crystalline form. Widely used in food and beverage as acidulant, in cleaning products
-    as chelating agent, and in industrial water treatment. High solubility and consistent quality.
-  summary: Anhydrous citric acid crystals for food, cleaning, and water treatment
-  price: $11.00 /kg
-  unit: kg
-  image: https://images.unsplash.com/photo-1621162854458-554d1bb07ea8?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1621162854458-554d1bb07ea8?w=600&q=80
-  tags:
-    - chelating-agent
-    - food-grade
-    - cleaning
-    - water-treatment
-  specifications:
-    Purity: ≥99.5%
-    Grade: Food Grade / Technical
-    Form: Fine Crystalline Powder
-    Packaging: 25 kg bag
-- id: CL-003
-  name: Quaternary Ammonium Sanitizer
-  slug: quaternary-ammonium-sanitizer
-  category: Cleaning
-  description: >-
-    EPA-registered quaternary ammonium disinfectant and sanitizer concentrate. Effective against bacteria, viruses, and
-    fungi. No-rinse formula at proper dilution. Ideal for food processing facilities, hospitals, and commercial
-    kitchens.
-  summary: EPA-registered quat sanitizer for food facilities and healthcare
-  price: $28.75 /gal
-  unit: gal
-  image: https://images.unsplash.com/photo-1584483766114-2cea6facdf57?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1584483766114-2cea6facdf57?w=600&q=80
-  tags:
-    - disinfectant
-    - sanitizer
-    - epa-registered
-    - no-rinse
-  specifications:
-    Active Ingredient: Quaternary Ammonium 10%
-    EPA Registered: Yes
-    Contact Time: 60 seconds
-    Packaging: 5 gal pail
-- id: AG-003
-  name: Glyphosate 480 SL
-  slug: glyphosate-480-sl
-  category: Agriculture
-  description: >-
-    Systemic herbicide containing 480 g/L glyphosate (isopropylamine salt). Non-selective, post-emergent weed control
-    for agricultural, industrial, and residential use. Rainfast within 2 hours. Biodegradable in soil.
-  summary: Non-selective systemic herbicide 480 g/L glyphosate
-  price: $19.50 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80
-  tags:
-    - herbicide
-    - systemic
-    - non-selective
-    - weed-control
-  specifications:
-    Active Ingredient: Glyphosate 480 g/L
-    Formulation: SL (Soluble Liquid)
-    Rainfast: 2 hours
-    Packaging: 20 L drum
-- id: RG-004
-  name: Silver Nitrate
-  slug: silver-nitrate
-  category: Reagents
-  description: >-
-    High-purity silver nitrate (AgNO₃) ACS reagent grade, ≥99.9%. Light-sensitive white crystals for analytical
-    titration (chloride determination), photographic chemistry, mirror production, and antimicrobial applications. Store
-    in amber bottle away from light.
-  summary: ACS grade silver nitrate 99.9% for titration and analysis
-  price: $95.00 /25 g
-  unit: 25 g
-  image: https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=600&q=80
-  tags:
-    - analytical
-    - titration
-    - light-sensitive
-    - antimicrobial
-  specifications:
-    Purity: ≥99.9%
-    Grade: ACS Reagent
-    Form: White Crystals
-    Packaging: 25 g amber bottle
-- id: LB-005
-  name: pH Meter Benchtop
-  slug: ph-meter-benchtop
-  category: Laboratory
-  description: >-
-    Professional benchtop pH meter with 0.01 pH resolution. Automatic temperature compensation, 3-point calibration, and
-    large backlit LCD. Includes combined pH electrode, buffer solutions, and electrode stand. Ideal for quality control
-    and research labs.
-  summary: Professional benchtop pH meter ±0.01 pH accuracy
-  price: $320.00 /unit
-  unit: unit
-  image: https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1581092335397-9583eb92d232?w=600&q=80
-  tags:
-    - ph-measurement
-    - benchtop
-    - digital
-    - laboratory
-  specifications:
-    Range: 0.00–14.00 pH
-    Resolution: 0.01 pH
-    Accuracy: ±0.01 pH
-    Calibration: 3-Point Automatic
-- id: CH-006
-  name: Hydrogen Peroxide 50%
-  slug: hydrogen-peroxide-50
-  category: Chemicals
-  description: >-
-    Industrial grade hydrogen peroxide (H₂O₂) 50% solution. Strong oxidizer for bleaching, disinfection, wastewater
-    treatment, and chemical synthesis. Decomposes to water and oxygen. Requires careful handling and proper storage.
-  summary: Industrial H₂O₂ 50% for bleaching and wastewater treatment
-  price: $26.00 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80
-  tags:
-    - oxidizer
-    - bleaching
-    - disinfection
-    - water-treatment
-  specifications:
-    Concentration: 50%
-    Grade: Industrial
-    Form: Liquid
-    Packaging: 30 L drum
-- id: OI-004
-  name: Mineral Oil White
-  slug: mineral-oil-white
-  category: Oils
-  description: >-
-    High-purity white mineral oil, USP/NF grade. Colorless, odorless, and tasteless. Used as lubricant in food
-    processing equipment, cosmetic base oil, pharmaceutical excipient, and industrial releases agent. Meets FDA
-    regulations for incidental food contact.
-  summary: USP grade white mineral oil for food, cosmetic, and pharma use
-  price: $15.00 /L
-  unit: L
-  image: https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=600&q=80
-  tags:
-    - usp-grade
-    - food-grade
-    - cosmetic
-    - lubricant
-  specifications:
-    Grade: USP / NF
-    Viscosity: 34.5 cSt at 40°C
-    FDA Compliant: Yes (21 CFR 172.878)
-    Packaging: 20 L pail
-- id: AG-004
-  name: Humic Acid Powder
-  slug: humic-acid-powder
-  category: Agriculture
-  description: >-
-    Natural humic acid powder (85% min) derived from leonardite. Improves soil structure, enhances nutrient uptake,
-    stimulates beneficial soil microbiology, and increases cation exchange capacity. Suitable for organic farming
-    systems.
-  summary: Natural humic acid 85% for soil improvement and organic farming
-  price: $36.00 /25 kg bag
-  unit: 25 kg bag
-  image: https://images.unsplash.com/photo-1615457289255-2af0c7effa28?w=600&q=80
-  images:
-    - https://images.unsplash.com/photo-1615457289255-2af0c7effa28?w=600&q=80
-  tags:
-    - soil-conditioner
-    - organic
-    - humic
-    - sustainable
-  specifications:
-    Humic Acid: ≥85%
-    Origin: Leonardite
-    Water Solubility: Partial
-    Organic Approved: Yes (OMRI Listed)
+    Brand: Lenovo
+    CPU: Intel Core i5-1145G7 (11th Gen)
+    GPU: Intel Iris Xe Graphics
+    RAM: LPDDR4x 16GB
+    STORAGE: 512GB NVMe SSD
+    Display: 14" FHD (1920x1080) IPS
