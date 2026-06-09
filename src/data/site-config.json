@@ -1,0 +1,45 @@
+{
+  "name": "MiniBio Chemical Supply",
+  "shortName": "MiniBio",
+  "description": "Premium chemical and laboratory supplies for industrial, agricultural, and research applications.",
+  "url": "https://minibioweb.com",
+  "logo": "/favicon.svg",
+  "banner": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80",
+  "avatar": "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=200&q=80",
+  "favicon": "/favicon.svg",
+  "contactEmail": "info@minibioweb.com",
+  "contactPhone": "+256755304241",
+  "whatsappNumber": "0755304241",
+  "whatsappMessage": "Found this product from your site.",
+  "whatsappOrderTemplate": "Product: {name}\nProduct ID: {id}\nPrice: {price}\nProduct link: {link}",
+  "address": "123 Industrial Blvd, Suite 100, Miami, FL 33101",
+  "categories": [
+    "All",
+    "Chemicals",
+    "Laboratory",
+    "Industrial",
+    "Cleaning",
+    "Agriculture",
+    "Oils",
+    "Reagents"
+  ],
+  "social": {
+    "instagram": "https://instagram.com/minibioweb",
+    "facebook": "https://facebook.com/minibioweb",
+    "tiktok": "https://tiktok.com/@minibioweb"
+  },
+  "links": [
+    { "label": "Browse Our Catalog", "url": "#catalog", "icon": "store" },
+    {
+      "label": "Contact via WhatsApp",
+      "url": "https://wa.me/15551234567?text=Hello.%20I%20would%20like%20to%20know%20more%20about%20your%20products%20and%20pricing.",
+      "icon": "whatsapp"
+    },
+    { "label": "Call Us", "url": "tel:+15551234567", "icon": "phone" },
+    {
+      "label": "Email Us",
+      "url": "mailto:info@minibioweb.com",
+      "icon": "email"
+    }
+  ]
+}

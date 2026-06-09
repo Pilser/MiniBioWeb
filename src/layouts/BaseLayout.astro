@@ -1,0 +1,69 @@
+---
+import SEO from '../components/SEO.astro'
+import siteConfig from '../data/site-config.json'
+import type { Product } from '../data/products'
+import theme from '../data/theme.json'
+import '../styles/global.css'
+
+export interface Props {
+  title: string
+  description: string
+  image?: string
+  noindex?: boolean
+  jsonLd?: object | object[]
+  product?: Product
+}
+
+const { title, description, image, noindex, jsonLd, product } = Astro.props
+const pageTitle = title.includes(siteConfig.shortName) ? title : `${title} | ${siteConfig.shortName}`
+const canonical = product
+  ? `${siteConfig.url}/product/${product.slug}/`
+  : undefined
+
+const t = theme as {
+  colors: Record<string, string>
+  fonts: Record<string, string>
+  radii: Record<string, string>
+  shadows: Record<string, string>
+  layout: Record<string, string>
+}
+
+function cssVar(name: string, value: string): string {
+  return `  --${name}: ${value};`
+}
+
+let cssVars = ':root {\n'
+for (const [k, v] of Object.entries(t.colors)) cssVars += cssVar(k, v) + '\n'
+cssVars += cssVar('font', t.fonts['sans']) + '\n'
+cssVars += cssVar('font-mono', t.fonts['mono']) + '\n'
+for (const [k, v] of Object.entries(t.radii)) cssVars += cssVar(`radius-${k}`, v) + '\n'
+for (const [k, v] of Object.entries(t.shadows)) cssVars += cssVar(`shadow-${k}`, v) + '\n'
+for (const [k, v] of Object.entries(t.layout)) cssVars += cssVar(k, v) + '\n'
+cssVars += '}\n'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEO
+      title={pageTitle}
+      description={description}
+      canonical={canonical}
+      image={product?.image || image}
+      type={product ? 'product' : 'website'}
+      noindex={noindex}
+      jsonLd={jsonLd}
+    />
+    <link rel="icon" type="image/svg+xml" href={siteConfig.favicon} />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style set:html={cssVars}></style>
+
+    <meta name="theme-color" content={t.colors['gray-900']} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=yes" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

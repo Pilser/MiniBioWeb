@@ -1,0 +1,55 @@
+---
+import siteConfig from '../data/site-config.json'
+
+export interface Props {
+  title: string
+  description: string
+  canonical?: string
+  image?: string
+  type?: string
+  noindex?: boolean
+  jsonLd?: object | object[]
+}
+
+const { title, description, canonical, image, type = 'website', noindex, jsonLd } = Astro.props
+const defaultImage = '/favicon.svg'
+const ogImage = image || defaultImage
+const fullImageUrl = ogImage.startsWith('http') ? ogImage : siteConfig.url + ogImage
+---
+
+<>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={canonical} />}
+
+  <meta property="og:type" content={type === 'product' ? 'product' : 'website'} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={fullImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:site_name" content={siteConfig.name} />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={fullImageUrl} />
+  <meta name="twitter:site" content={siteConfig.name} />
+
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
+
+  {type === 'product' && (
+    <meta property="product:availability" content="in stock" />
+  )}
+
+  {jsonLd && (
+    <script set:html={JSON.stringify(
+      Array.isArray(jsonLd) ? { '@context': 'https://schema.org', '@graph': jsonLd } : { '@context': 'https://schema.org', ...jsonLd }
+    )} type="application/ld+json" />
+  )}
+</>

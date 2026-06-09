@@ -1,11 +1,56 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import CatalogApp from '../components/CatalogApp.astro'
+import siteConfig from '../data/site-config.json'
+import products from '../data/products.json'
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const allProducts = Array.isArray(products) ? products : []
+const categories = [...new Set(allProducts.map(p => p.category))].sort()
+const catalogData = JSON.stringify(allProducts)
+const siteConfigData = JSON.stringify({ whatsappNumber: siteConfig.whatsappNumber, url: siteConfig.url, whatsappOrderTemplate: siteConfig.whatsappOrderTemplate })
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title={`${siteConfig.name} — Premium Chemical & Laboratory Supplies`}
+  description={siteConfig.description}
+  jsonLd={[
+    {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: `${siteConfig.url}${siteConfig.logo}`,
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: siteConfig.contactPhone,
+        contactType: 'sales',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      name: siteConfig.name,
+      url: siteConfig.url,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${siteConfig.url}/?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ]}
+>
+  <Header />
+
+  <main id="catalog">
+    <!-- Hidden data for the client-side catalog app -->
+    <script type="application/json" id="catalog-data" set:html={catalogData}></script>
+    <script type="application/json" id="site-config-data" set:html={siteConfigData}></script>
+
+    <CatalogApp />
+  </main>
+
+  <Footer />
+</BaseLayout>

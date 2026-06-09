@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://minibioweb.com/sitemap-index.xml

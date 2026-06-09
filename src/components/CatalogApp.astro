@@ -1,0 +1,940 @@
+---
+interface Props {}
+---
+
+<div id="catalog-app">
+  <div id="search-container" class="container"></div>
+  <div id="categories-container"></div>
+  <div id="product-grid" class="product-grid container">
+    <div class="skeleton-grid">
+      {Array.from({ length: 8 }).map(() => (
+        <div class="skeleton-card">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton skeleton-line skeleton-line-sm"></div>
+          <div class="skeleton skeleton-line"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div id="scroll-sentinel" class="scroll-sentinel"></div>
+
+  <div id="product-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Product details" hidden>
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel" role="document">
+      <button class="modal-close" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <div class="modal-content"></div>
+    </div>
+  </div>
+
+  <div id="image-lightbox" class="lightbox" hidden>
+    <div class="lightbox-backdrop"></div>
+    <button class="lightbox-close" aria-label="Close fullscreen image">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-prev" aria-label="Previous image">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="lightbox-image-wrap">
+      <img src="" alt="" id="lightbox-image" />
+    </div>
+    <button class="lightbox-btn lightbox-next" aria-label="Next image">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="lightbox-counter"></div>
+  </div>
+</div>
+
+<script>
+  const products = JSON.parse(document.getElementById('catalog-data')?.textContent || '[]')
+  const siteConfig = JSON.parse(document.getElementById('site-config-data')?.textContent || '{}')
+
+  const PAGE_SIZE = 20
+  const GRID = document.getElementById('product-grid')
+  const SENTINEL = document.getElementById('scroll-sentinel')
+  const MODAL = document.getElementById('product-modal')
+  const MODAL_CONTENT = MODAL.querySelector('.modal-content')
+  const MODAL_CLOSE = MODAL.querySelector('.modal-close')
+  const MODAL_BACKDROP = MODAL.querySelector('.modal-backdrop')
+  const LIGHTBOX = document.getElementById('image-lightbox')
+  const LIGHTBOX_IMG = document.getElementById('lightbox-image')
+  const LIGHTBOX_CLOSE = LIGHTBOX.querySelector('.lightbox-close')
+  const LIGHTBOX_PREV = LIGHTBOX.querySelector('.lightbox-prev')
+  const LIGHTBOX_NEXT = LIGHTBOX.querySelector('.lightbox-next')
+  const LIGHTBOX_COUNTER = LIGHTBOX.querySelector('.lightbox-counter')
+  const LIGHTBOX_BACKDROP = LIGHTBOX.querySelector('.lightbox-backdrop')
+  const SEARCH_CONTAINER = document.getElementById('search-container')
+  const CATEGORIES_CONTAINER = document.getElementById('categories-container')
+
+  let filteredProducts = [...products]
+  let renderedCount = 0
+  let isLoading = false
+  let isEnd = false
+  let currentCategory = ''
+  let currentSearch = ''
+  let isModalOpen = false
+  let isLightboxOpen = false
+  let lastFocused = null
+  let modalImageIndex = 0
+  let lightboxImages = []
+
+  function init() {
+    renderSearchBar()
+    renderCategoryNav()
+    loadMore()
+    setupObserver()
+    setupModalEvents()
+  }
+
+  function renderSearchBar() {
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = `
+      <div class="search-wrapper">
+        <div class="search-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <input type="search" class="search-input" placeholder="Search products..." aria-label="Search products" autocomplete="off" spellcheck="false" />
+      </div>
+    `
+    const input = wrapper.querySelector('input')
+    let debounceTimer
+    input.addEventListener('input', () => {
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
+        currentSearch = input.value.toLowerCase().trim()
+        resetAndRender()
+      }, 200)
+    })
+    SEARCH_CONTAINER.appendChild(wrapper)
+  }
+
+  function renderCategoryNav() {
+    const cats = ['All', ...new Set(products.map(p => p.category))]
+    const wrapper = document.createElement('div')
+    wrapper.className = 'container'
+    wrapper.innerHTML = `
+      <nav class="categories" aria-label="Product categories">
+        <div class="categories-scroll">
+          ${cats.map(c => `
+            <button class="category-btn" data-category="${c === 'All' ? '' : c}" aria-pressed="${c === 'All'}">${c}</button>
+          `).join('')}
+        </div>
+      </nav>
+    `
+    wrapper.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        wrapper.querySelectorAll('.category-btn').forEach(b => b.setAttribute('aria-pressed', 'false'))
+        btn.setAttribute('aria-pressed', 'true')
+        currentCategory = btn.getAttribute('data-category') || ''
+        resetAndRender()
+      })
+    })
+    CATEGORIES_CONTAINER.appendChild(wrapper)
+  }
+
+  function filterProducts() {
+    return products.filter(p => {
+      if (currentCategory && p.category !== currentCategory) return false
+      if (currentSearch) {
+        const str = `${p.name} ${p.description} ${p.category} ${(p.tags||[]).join(' ')} ${p.id}`.toLowerCase()
+        if (!str.includes(currentSearch)) return false
+      }
+      return true
+    })
+  }
+
+  function resetAndRender() {
+    filteredProducts = filterProducts()
+    renderedCount = 0
+    isEnd = false
+    GRID.innerHTML = ''
+    loadMore()
+  }
+
+  function loadMore() {
+    if (isLoading || isEnd) return
+    isLoading = true
+    const start = renderedCount
+    const end = Math.min(start + PAGE_SIZE, filteredProducts.length)
+    const batch = filteredProducts.slice(start, end)
+    if (end >= filteredProducts.length) isEnd = true
+    const frag = document.createDocumentFragment()
+    batch.forEach(p => frag.appendChild(createCard(p)))
+    GRID.appendChild(frag)
+    renderedCount = end
+    isLoading = false
+    if (renderedCount === 0) showEmpty()
+  }
+
+  function createCard(product) {
+    const card = document.createElement('article')
+    card.className = 'product-card'
+    card.setAttribute('data-product-id', product.id)
+
+    const images = product.images && product.images.length ? product.images : [product.image]
+
+    card.innerHTML = `
+      <div class="card-image">
+        <img src="${esc(product.image)}" alt="${esc(product.name)}" loading="lazy" decoding="async" />
+        <span class="badge ${product.available ? 'badge-available' : 'badge-unavailable'}">${product.available ? 'In Stock' : 'Unavailable'}</span>
+      </div>
+      <div class="card-body">
+        <span class="card-category">${esc(product.category)}</span>
+        <h3 class="card-title">${esc(product.name)}</h3>
+        <div class="card-footer">
+          ${product.price != null
+            ? `<span class="card-price">${esc(product.price)}</span>`
+            : ''
+          }
+          <a href="${whatsAppUrl(product)}" target="_blank" rel="noopener noreferrer" class="btn-order" onclick="event.stopPropagation()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+    `
+    card.addEventListener('click', e => {
+      if (e.target.closest('.btn-order')) return
+      openModal(product)
+    })
+    return card
+  }
+
+  function showEmpty() {
+    GRID.innerHTML = `
+      <div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <h3>No products found</h3>
+        <p>Try adjusting your search or filter</p>
+      </div>
+    `
+  }
+
+  function openModal(product) {
+    lastFocused = document.activeElement
+    isModalOpen = true
+    document.body.style.overflow = 'hidden'
+    modalImageIndex = 0
+
+    const images = product.images && product.images.length ? product.images : [product.image]
+    const specs = product.specifications
+    const hasPrice = product.price != null
+    const hasSpecs = specs && Object.keys(specs).length > 0
+    const hasTags = product.tags && product.tags.length > 0
+    const hasMultipleImages = images.length > 1
+
+    MODAL_CONTENT.innerHTML = `
+      <div class="modal-gallery">
+        <div class="modal-image-wrap">
+          <img src="${esc(images[0])}" alt="${esc(product.name)}" id="modal-main-image" />
+        </div>
+        ${hasMultipleImages ? `
+          <div class="modal-gallery-nav">
+            <button class="gallery-btn gallery-prev" aria-label="Previous image">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="gallery-dots">
+              ${images.map((_, i) => `<span class="gallery-dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`).join('')}
+            </div>
+            <span class="gallery-counter">1 / ${images.length}</span>
+            <button class="gallery-btn gallery-next" aria-label="Next image">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        ` : ''}
+      </div>
+      <div class="modal-details">
+        <span class="modal-category">${esc(product.category)}</span>
+        <h2 class="modal-title">${esc(product.name)}</h2>
+
+        ${hasPrice ? `
+          <div class="modal-price">
+            <span class="modal-price-value">${esc(product.price)}</span>
+          </div>
+        ` : ''}
+
+        <div class="modal-availability">
+          <span class="status-dot ${product.available ? 'available' : 'unavailable'}"></span>
+          <span>${product.available ? 'In Stock' : 'Currently Unavailable'}</span>
+        </div>
+
+        <p class="modal-desc">${esc(product.description)}</p>
+
+        ${hasSpecs ? `
+          <div class="modal-specs">
+            <h3>Specifications</h3>
+            <dl>
+              ${Object.entries(specs).map(([k, v]) => `
+                <div class="spec-row"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>
+              `).join('')}
+            </dl>
+          </div>
+        ` : ''}
+
+        ${hasTags ? `
+          <div class="modal-tags">
+            ${product.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+          </div>
+        ` : ''}
+
+        <a href="${whatsAppUrl(product)}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-order">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Order on WhatsApp
+        </a>
+
+        <button class="btn-share" data-share-url="${siteConfig.url}/product/${product.slug}/" data-share-title="${esc(product.name)}" data-share-desc="${esc(product.summary || product.description)}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
+      </div>
+    `
+
+    const mainImg = document.getElementById('modal-main-image')
+
+    function showImage(index) {
+      modalImageIndex = index
+      mainImg.src = images[index]
+      if (hasMultipleImages) {
+        const dots = MODAL_CONTENT.querySelectorAll('.gallery-dot')
+        dots.forEach((d, i) => d.classList.toggle('active', i === index))
+        const counter = MODAL_CONTENT.querySelector('.gallery-counter')
+        if (counter) counter.textContent = `${index + 1} / ${images.length}`
+      }
+    }
+
+    if (hasMultipleImages) {
+      const dots = MODAL_CONTENT.querySelectorAll('.gallery-dot')
+      const prevBtn = MODAL_CONTENT.querySelector('.gallery-prev')
+      const nextBtn = MODAL_CONTENT.querySelector('.gallery-next')
+
+      if (prevBtn) prevBtn.addEventListener('click', () => {
+        showImage(modalImageIndex > 0 ? modalImageIndex - 1 : images.length - 1)
+      })
+      if (nextBtn) nextBtn.addEventListener('click', () => {
+        showImage(modalImageIndex < images.length - 1 ? modalImageIndex + 1 : 0)
+      })
+      dots.forEach(d => d.addEventListener('click', () => showImage(Number(d.dataset.index))))
+    }
+
+    mainImg.addEventListener('click', () => openLightbox(images, modalImageIndex))
+
+    const shareBtn = MODAL_CONTENT.querySelector('.btn-share')
+    if (shareBtn) {
+      shareBtn.addEventListener('click', () => {
+        const url = shareBtn.dataset.shareUrl
+        const title = shareBtn.dataset.shareTitle
+        const desc = shareBtn.dataset.shareDesc
+        if (navigator.share) {
+          navigator.share({ title, text: desc, url }).catch(() => {})
+        } else {
+          navigator.clipboard.writeText(url).then(() => {
+            const orig = shareBtn.innerHTML
+            shareBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!'
+            setTimeout(() => { shareBtn.innerHTML = orig }, 2000)
+          }).catch(() => {})
+        }
+      })
+    }
+
+    MODAL.hidden = false
+    requestAnimationFrame(() => {
+      MODAL.classList.add('open')
+      MODAL_CLOSE.focus()
+    })
+  }
+
+  function closeModal() {
+    MODAL.classList.remove('open')
+    isModalOpen = false
+    document.body.style.overflow = ''
+    setTimeout(() => {
+      MODAL.hidden = true
+      if (lastFocused) lastFocused.focus()
+    }, 300)
+  }
+
+  function setupModalEvents() {
+    MODAL_CLOSE.addEventListener('click', closeModal)
+    MODAL_BACKDROP.addEventListener('click', closeModal)
+    LIGHTBOX_CLOSE.addEventListener('click', closeLightbox)
+    LIGHTBOX_BACKDROP.addEventListener('click', closeLightbox)
+    LIGHTBOX_PREV.addEventListener('click', lightboxPrev)
+    LIGHTBOX_NEXT.addEventListener('click', lightboxNext)
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (isLightboxOpen) closeLightbox()
+        else if (isModalOpen) closeModal()
+      }
+      if (isLightboxOpen) {
+        if (e.key === 'ArrowLeft') lightboxPrev()
+        if (e.key === 'ArrowRight') lightboxNext()
+      }
+    })
+  }
+
+  function openLightbox(images, index) {
+    lightboxImages = images
+    modalImageIndex = index
+    isLightboxOpen = true
+    document.body.style.overflow = 'hidden'
+    LIGHTBOX_IMG.src = images[index]
+    updateLightboxCounter()
+    LIGHTBOX.hidden = false
+    requestAnimationFrame(() => {
+      LIGHTBOX.classList.add('open')
+      LIGHTBOX_CLOSE.focus()
+    })
+  }
+
+  function closeLightbox() {
+    LIGHTBOX.classList.remove('open')
+    isLightboxOpen = false
+    document.body.style.overflow = isModalOpen ? 'hidden' : ''
+    setTimeout(() => {
+      LIGHTBOX.hidden = true
+    }, 300)
+  }
+
+  function lightboxPrev() {
+    const len = lightboxImages.length
+    modalImageIndex = modalImageIndex > 0 ? modalImageIndex - 1 : len - 1
+    LIGHTBOX_IMG.src = lightboxImages[modalImageIndex]
+    updateLightboxCounter()
+  }
+
+  function lightboxNext() {
+    const len = lightboxImages.length
+    modalImageIndex = modalImageIndex < len - 1 ? modalImageIndex + 1 : 0
+    LIGHTBOX_IMG.src = lightboxImages[modalImageIndex]
+    updateLightboxCounter()
+  }
+
+  function updateLightboxCounter() {
+    LIGHTBOX_COUNTER.textContent = `${modalImageIndex + 1} / ${lightboxImages.length}`
+  }
+
+  function setupObserver() {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting && !isLoading && !isEnd) loadMore() })
+    }, { rootMargin: '200px' }).observe(SENTINEL)
+  }
+
+  function whatsAppUrl(product) {
+    const productUrl = `${siteConfig.url}/product/${product.slug}/`
+    const price = product.price || ''
+    const tpl = siteConfig.whatsappOrderTemplate || 'Product: {name}\nID: {id}\nPrice: {price}\nLink: {link}'
+    const msg = tpl
+      .replace(/{name}/g, product.name)
+      .replace(/{id}/g, product.id)
+      .replace(/{price}/g, price)
+      .replace(/{link}/g, productUrl)
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(msg)}`
+  }
+
+  function esc(str) {
+    const d = document.createElement('div')
+    d.textContent = str
+    return d.innerHTML
+  }
+
+  document.addEventListener('astro:page-load', init)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init)
+  } else {
+    init()
+  }
+</script>
+
+<style is:global>
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 4px 0 32px;
+  }
+  @media (min-width: 640px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  }
+  @media (min-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  }
+
+  .skeleton-grid { display: contents; }
+  .skeleton-card { display: flex; flex-direction: column; gap: 8px; }
+  .skeleton-img { aspect-ratio: 1 / 1; border-radius: var(--radius-md); }
+  .skeleton-line { height: 14px; width: 100%; }
+  .skeleton-line-sm { width: 40%; height: 12px; }
+
+  .scroll-sentinel { height: 1px; }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 64px 24px; text-align: center;
+    color: var(--gray-400);
+  }
+  .empty-state svg { margin-bottom: 16px; }
+  .empty-state h3 { font-size: 18px; font-weight: 600; color: var(--gray-700); margin-bottom: 4px; }
+  .empty-state p { font-size: 14px; color: var(--gray-500); }
+
+  /* ---- Product Card ---- */
+  .product-card {
+    position: relative;
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .product-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+  .product-card .card-image {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--gray-100);
+  }
+  .product-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+    transition: transform 0.3s;
+  }
+  .product-card:hover .card-image img { transform: scale(1.05); }
+
+  .product-card .badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .badge-available { background: var(--success-bg); color: var(--success); }
+  .badge-unavailable { background: var(--warning-bg); color: var(--warning); }
+
+  .product-card .card-body {
+    padding: 10px 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .product-card .card-category {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .product-card .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-card .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 6px;
+    gap: 6px;
+  }
+  .product-card .card-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-900);
+  }
+
+  .product-card .btn-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: var(--whatsapp);
+    color: white;
+    border-radius: 50%;
+    transition: background 0.2s;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .product-card .btn-order:hover { background: var(--whatsapp-dark); }
+
+  /* ---- Search ---- */
+  .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 12px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--gray-400);
+    pointer-events: none;
+    display: flex;
+  }
+  .search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 16px 0 44px;
+    background: white;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-full);
+    font-size: 15px;
+    color: var(--gray-900);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input::placeholder { color: var(--gray-400); }
+  .search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  /* ---- Categories ---- */
+  .categories { margin: 14px 0; }
+  .categories-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 0;
+  }
+  .categories-scroll::-webkit-scrollbar { display: none; }
+  .category-btn {
+    flex-shrink: 0;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    background: white;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .category-btn:hover { border-color: var(--gray-300); background: var(--gray-50); color: var(--gray-900); }
+  .category-btn[aria-pressed="true"] {
+    background: var(--gray-900);
+    border-color: var(--gray-900);
+    color: white;
+  }
+  .category-btn[aria-pressed="true"]:hover { background: var(--gray-800); border-color: var(--gray-800); }
+
+  /* ---- Modal ---- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .modal-overlay[hidden] { display: none; }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.open .modal-backdrop { opacity: 1; }
+
+  .modal-panel {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    height: 100%;
+    background: white;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -8px 0 30px rgba(0,0,0,0.15);
+  }
+  .modal-overlay.open .modal-panel { transform: translateX(0); }
+  @media (max-width: 520px) { .modal-panel { max-width: 100%; } }
+
+  .modal-close {
+    position: sticky;
+    top: 12px;
+    float: right;
+    margin: 12px;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+    z-index: 1;
+  }
+  .modal-close:hover { background: var(--gray-100); }
+
+  .modal-content { padding: 0 20px 32px; }
+
+  .modal-gallery {
+    margin: 0 -20px;
+    background: var(--gray-50);
+    position: relative;
+  }
+  .modal-image-wrap {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-image-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .modal-gallery-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 16px 12px;
+  }
+  .gallery-btn {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    color: var(--gray-600);
+    transition: background 0.2s;
+  }
+  .gallery-btn:hover { background: var(--gray-100); }
+  .gallery-dots { display: flex; gap: 6px; }
+  .gallery-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gray-300);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .gallery-dot.active { background: var(--gray-900); }
+
+  .modal-details { padding-top: 20px; }
+  .modal-category {
+    font-size: 12px; font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .modal-title {
+    font-size: 22px; font-weight: 700;
+    color: var(--gray-900);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .modal-price {
+    margin-top: 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .modal-price-value { font-size: 24px; font-weight: 700; color: var(--gray-900); }
+  .modal-unit { font-size: 14px; color: var(--gray-400); }
+
+  .modal-availability {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .status-dot.available { background: var(--success); }
+  .status-dot.unavailable { background: var(--gray-300); }
+
+  .modal-desc {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--gray-600);
+  }
+
+  .modal-specs { margin-top: 20px; }
+  .modal-specs h3 { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 10px; }
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .spec-row dt { color: var(--gray-500); font-weight: 500; }
+  .spec-row dd { color: var(--gray-900); font-weight: 500; text-align: right; }
+
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  .tag {
+    padding: 4px 10px;
+    background: var(--gray-100);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-600);
+  }
+
+  .btn-whatsapp-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px 24px;
+    background: var(--whatsapp);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-whatsapp-order:hover { background: var(--whatsapp-dark); }
+
+  .btn-share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 24px;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .btn-share:hover { background: var(--gray-200); }
+
+  /* ---- Gallery Counter ---- */
+  .gallery-counter {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-400);
+    white-space: nowrap;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  /* ---- Lightbox ---- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox[hidden] { display: none; }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .lightbox.open .lightbox-backdrop { opacity: 1; }
+
+  .lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  .lightbox-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .lightbox-btn:hover { background: rgba(255,255,255,0.2); }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+
+  .lightbox-image-wrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 64px;
+  }
+  .lightbox-image-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    font-weight: 500;
+  }
+</style>

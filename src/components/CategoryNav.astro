@@ -1,0 +1,66 @@
+---
+import { siteConfig } from '../data/site-config'
+---
+
+<nav class="categories" aria-label="Product categories">
+  <div class="categories-scroll">
+    {siteConfig.categories.map(cat => (
+      <button
+        class="category-btn"
+        data-category={cat === 'All' ? '' : cat}
+        aria-pressed={cat === 'All'}
+      >
+        {cat}
+      </button>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .categories {
+    margin: 16px 0;
+  }
+
+  .categories-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0;
+  }
+
+  .categories-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-btn {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    background: white;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 999px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .category-btn:hover {
+    border-color: var(--gray-300);
+    background: var(--gray-50);
+    color: var(--gray-900);
+  }
+
+  .category-btn[aria-pressed="true"] {
+    background: var(--gray-900);
+    border-color: var(--gray-900);
+    color: white;
+  }
+
+  .category-btn[aria-pressed="true"]:hover {
+    background: var(--gray-800);
+    border-color: var(--gray-800);
+  }
+</style>
