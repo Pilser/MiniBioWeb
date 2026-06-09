@@ -418,6 +418,13 @@ interface Props {}
 
     mainImg.addEventListener('click', () => openLightbox(images, modalImageIndex))
 
+    if (hasMultipleImages) {
+      setupSwipe(mainImg,
+        function () { showImage(modalImageIndex < images.length - 1 ? modalImageIndex + 1 : 0) },
+        function () { showImage(modalImageIndex > 0 ? modalImageIndex - 1 : images.length - 1) }
+      )
+    }
+
     const shareNativeBtn = MODAL_CONTENT.querySelector('.btn-share')
     if (shareNativeBtn) {
       shareNativeBtn.addEventListener('click', () => {
@@ -513,6 +520,9 @@ interface Props {}
       LIGHTBOX.classList.add('open')
       LIGHTBOX_CLOSE.focus()
     })
+    if (images.length > 1) {
+      setupSwipe(LIGHTBOX_IMG, lightboxNext, lightboxPrev)
+    }
   }
 
   function closeLightbox() {
@@ -558,6 +568,47 @@ interface Props {}
       .replace(/{price}/g, price)
       .replace(/{link}/g, productUrl)
     return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(msg)}`
+  }
+
+  function setupSwipe(el, onSwipeLeft, onSwipeRight) {
+    var startX = 0, startY = 0, isDown = false
+
+    el.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX
+      startY = e.touches[0].clientY
+      isDown = true
+    }, { passive: true })
+
+    el.addEventListener('touchend', function (e) {
+      if (!isDown) return
+      isDown = false
+      var dx = e.changedTouches[0].clientX - startX
+      var dy = e.changedTouches[0].clientY - startY
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        dx > 0 ? onSwipeRight() : onSwipeLeft()
+      }
+    }, { passive: true })
+
+    el.addEventListener('mousedown', function (e) {
+      startX = e.clientX
+      startY = e.clientY
+      isDown = true
+    })
+
+    document.addEventListener('mousemove', function (e) {
+      if (!isDown) return
+      e.preventDefault()
+    })
+
+    document.addEventListener('mouseup', function (e) {
+      if (!isDown) return
+      isDown = false
+      var dx = e.clientX - startX
+      var dy = e.clientY - startY
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        dx > 0 ? onSwipeRight() : onSwipeLeft()
+      }
+    })
   }
 
   function esc(str) {
@@ -864,18 +915,18 @@ interface Props {}
   @media (max-width: 520px) { .modal-panel { max-width: 100%; } }
 
   .modal-close {
-    position: sticky;
-    top: 12px;
-    float: right;
-    margin: 12px;
-    width: 36px; height: 36px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 34px; height: 34px;
     display: flex; align-items: center; justify-content: center;
-    background: white;
+    background: rgba(255,255,255,0.9);
     border-radius: 50%;
     box-shadow: var(--shadow-md);
-    z-index: 1;
+    z-index: 10;
+    margin: 0; float: none;
   }
-  .modal-close:hover { background: var(--gray-100); }
+  .modal-close:hover { background: white; }
 
   .modal-content { padding: 0 20px 32px; }
 
@@ -885,11 +936,11 @@ interface Props {}
     position: relative;
   }
   .modal-image-wrap {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    padding: 4px;
   }
   .modal-image-wrap img {
     max-width: 100%;
@@ -1130,12 +1181,16 @@ interface Props {}
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: 64px;
+    padding: 4px;
   }
   .lightbox-image-wrap img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+  }
+
+  @media (min-width: 640px) {
+    .lightbox-image-wrap { padding: 24px; }
   }
 
   .lightbox-counter {
