@@ -43,6 +43,8 @@ const socialLabel: Record<string, string> = {
     <a href="/" class="profile-name-link"><h1 class="profile-name">{siteConfig.name}</h1></a>
     <p class="profile-bio">{siteConfig.description}</p>
 
+    <a href={siteConfig.address.url} target="_blank" rel="noopener noreferrer" class="profile-address">{siteConfig.address.text}</a>
+
     <div class="profile-social">
       {Object.entries(siteConfig.social).map(([key, url]) => {
         const cls = socialIcon[key]
@@ -59,8 +61,16 @@ const socialLabel: Record<string, string> = {
       {siteConfig.links.map(link => {
         const cls = faIcon[link.icon] || 'fa-link'
         const prefix = link.icon === 'whatsapp' ? 'fab' : 'fas'
+        let url = link.url
+        if (link.icon === 'whatsapp') {
+          url = `https://wa.me/${siteConfig.whatsappNumber}?text=Hey%2C%20am%20from%20your%20site`
+        } else if (link.icon === 'phone') {
+          url = `tel:${siteConfig.contactPhone}`
+        } else if (link.icon === 'email') {
+          url = `mailto:${siteConfig.contactEmail}`
+        }
         return (
-          <a href={link.url} target="_blank" rel="noopener noreferrer" class="link-icon" aria-label={link.label}>
+          <a href={url} target="_blank" rel="noopener noreferrer" class="link-icon" aria-label={link.label}>
             <i class={`${prefix} ${cls}`}></i>
           </a>
         )
@@ -158,6 +168,19 @@ const socialLabel: Record<string, string> = {
     gap: 12px;
   }
 
+  .profile-address {
+    display: block;
+    font-size: 12px;
+    color: var(--gray-500);
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: color 0.2s;
+  }
+  .profile-address:hover {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
   .social-link {
     display: flex;
     align-items: center;
@@ -203,6 +226,7 @@ const socialLabel: Record<string, string> = {
   .link-icon:hover {
     background: var(--gray-900);
     border-color: var(--gray-900);
+    color: white;
   }
 
   .link-icon i {

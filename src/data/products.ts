@@ -10,7 +10,6 @@ export interface Product {
   image: string
   images: string[]
   tags: string[]
-  available: boolean
   specifications?: Record<string, string>
 }
 

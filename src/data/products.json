@@ -19,7 +19,6 @@
       "ph-adjustment",
       "soap-making"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥98%",
       "Grade": "Technical",
@@ -46,7 +45,6 @@
       "laboratory",
       "metal-processing"
     ],
-    "available": true,
     "specifications": {
       "Concentration": "37%",
       "Grade": "Reagent",
@@ -73,7 +71,6 @@
       "synthesis",
       "battery"
     ],
-    "available": true,
     "specifications": {
       "Purity": "98%",
       "Grade": "Reagent ACS",
@@ -101,7 +98,6 @@
       "cleaning",
       "solvent"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥99.9%",
       "Grade": "ACS Reagent",
@@ -130,7 +126,6 @@
       "quality-control",
       "weighing"
     ],
-    "available": true,
     "specifications": {
       "Capacity": "220 g",
       "Readability": "0.0001 g",
@@ -157,7 +152,6 @@
       "heat-resistant",
       "basic-equipment"
     ],
-    "available": true,
     "specifications": {
       "Material": "Borosilicate Glass 3.3",
       "Sizes": "50–2000 mL",
@@ -184,7 +178,6 @@
       "ergonomic",
       "autoclavable"
     ],
-    "available": true,
     "specifications": {
       "Volume Range": "100–1000 µL",
       "Increment": "1 µL",
@@ -211,7 +204,6 @@
       "cleaning",
       "manufacturing"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥99.5%",
       "Grade": "Industrial",
@@ -238,7 +230,6 @@
       "food-grade",
       "machinery"
     ],
-    "available": true,
     "specifications": {
       "Temp Range": "-50°C to 230°C",
       "Grade": "Food Grade NSF H1",
@@ -265,7 +256,6 @@
       "chemical",
       "processing"
     ],
-    "available": true,
     "specifications": {
       "Material": "Polypropylene (PP)",
       "Capacity": "200 L",
@@ -292,7 +282,6 @@
       "biodegradable",
       "concentrate"
     ],
-    "available": true,
     "specifications": {
       "Type": "Alkaline Concentrate",
       "Dilution": "1:10–1:20",
@@ -319,7 +308,6 @@
       "phosphate-free",
       "precision-cleaning"
     ],
-    "available": true,
     "specifications": {
       "Type": "Liquid Concentrate",
       "pH": "Neutral",
@@ -346,7 +334,6 @@
       "fertigation",
       "crops"
     ],
-    "available": true,
     "specifications": {
       "Nitrogen Content": "32% (UAN)",
       "Form": "Liquid Solution",
@@ -373,7 +360,6 @@
       "chloride-free",
       "soluble"
     ],
-    "available": true,
     "specifications": {
       "K₂O": "50%",
       "S": "18%",
@@ -401,7 +387,6 @@
       "oleochemical",
       "biofuel"
     ],
-    "available": true,
     "specifications": {
       "Type": "RBD Palm Oil",
       "FFA": "<0.1%",
@@ -428,7 +413,6 @@
       "edible",
       "mct"
     ],
-    "available": true,
     "specifications": {
       "Extraction": "Cold-Pressed",
       "Free Fatty Acids": "<0.5%",
@@ -455,7 +439,6 @@
       "natural",
       "cleaning"
     ],
-    "available": true,
     "specifications": {
       "Botanical Name": "Eucalyptus globulus",
       "1,8-Cineole": "≥70%",
@@ -482,7 +465,6 @@
       "buffer",
       "pharmaceutical"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥99.9%",
       "Grade": "ACS Reagent",
@@ -509,7 +491,6 @@
       "fungicide",
       "crystal"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥98%",
       "Grade": "Reagent",
@@ -536,7 +517,6 @@
       "water-treatment",
       "titration"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥99%",
       "Grade": "ACS Reagent",
@@ -563,7 +543,6 @@
       "etching",
       "fertilizer"
     ],
-    "available": true,
     "specifications": {
       "Concentration": "70%",
       "Grade": "Reagent ACS",
@@ -590,7 +569,6 @@
       "digital-control",
       "stainless-steel"
     ],
-    "available": true,
     "specifications": {
       "Temp Range": "Ambient+10°C to 300°C",
       "Capacity": "80 L",
@@ -617,7 +595,6 @@
       "cleaning",
       "water-treatment"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥99.5%",
       "Grade": "Food Grade / Technical",
@@ -644,7 +621,6 @@
       "epa-registered",
       "no-rinse"
     ],
-    "available": true,
     "specifications": {
       "Active Ingredient": "Quaternary Ammonium 10%",
       "EPA Registered": "Yes",
@@ -671,7 +647,6 @@
       "non-selective",
       "weed-control"
     ],
-    "available": true,
     "specifications": {
       "Active Ingredient": "Glyphosate 480 g/L",
       "Formulation": "SL (Soluble Liquid)",
@@ -698,7 +673,6 @@
       "light-sensitive",
       "antimicrobial"
     ],
-    "available": true,
     "specifications": {
       "Purity": "≥99.9%",
       "Grade": "ACS Reagent",
@@ -725,7 +699,6 @@
       "digital",
       "laboratory"
     ],
-    "available": true,
     "specifications": {
       "Range": "0.00–14.00 pH",
       "Resolution": "0.01 pH",
@@ -752,7 +725,6 @@
       "disinfection",
       "water-treatment"
     ],
-    "available": true,
     "specifications": {
       "Concentration": "50%",
       "Grade": "Industrial",
@@ -779,7 +751,6 @@
       "cosmetic",
       "lubricant"
     ],
-    "available": true,
     "specifications": {
       "Grade": "USP / NF",
       "Viscosity": "34.5 cSt at 40°C",
@@ -806,7 +777,6 @@
       "humic",
       "sustainable"
     ],
-    "available": true,
     "specifications": {
       "Humic Acid": "≥85%",
       "Origin": "Leonardite",
