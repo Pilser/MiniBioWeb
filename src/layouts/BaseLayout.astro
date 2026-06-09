@@ -62,8 +62,39 @@ cssVars += '}\n'
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=yes" />
+    {siteConfig.gscVerification && (
+      <meta name="google-site-verification" content={siteConfig.gscVerification} />
+    )}
+    {siteConfig.gaMeasurementId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaMeasurementId}`}></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${siteConfig.gaMeasurementId}');
+        </script>
+      </>
+    )}
   </head>
   <body>
     <slot />
+    {siteConfig.gaMeasurementId && (
+      <script is:inline>
+        document.addEventListener('click', function(e) {
+          var el = e.target.closest('[data-track]');
+          if (!el) return;
+          var action = el.getAttribute('data-track');
+          var label = el.getAttribute('data-track-label') || '';
+          var id = el.getAttribute('data-track-id') || '';
+          if (typeof gtag !== 'undefined') {
+            gtag('event', action, {
+              'event_label': label,
+              'event_id': id
+            });
+          }
+        });
+      </script>
+    )}
   </body>
 </html>

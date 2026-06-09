@@ -32,9 +32,27 @@
     "tiktok": "https://tiktok.com/@minibioweb"
   },
   "links": [
-    { "label": "Browse Our Catalog", "url": "#catalog", "icon": "store" },
-    { "label": "Contact via WhatsApp", "url": "", "icon": "whatsapp" },
-    { "label": "Call Us", "url": "", "icon": "phone" },
-    { "label": "Email Us", "url": "", "icon": "email" }
-  ]
+    {
+      "label": "Browse Our Catalog",
+      "url": "#catalog",
+      "icon": "store"
+    },
+    {
+      "label": "Contact via WhatsApp",
+      "url": "",
+      "icon": "whatsapp"
+    },
+    {
+      "label": "Call Us",
+      "url": "",
+      "icon": "phone"
+    },
+    {
+      "label": "Email Us",
+      "url": "",
+      "icon": "email"
+    }
+  ],
+  "gaMeasurementId": "",
+  "gscVerification": ""
 }

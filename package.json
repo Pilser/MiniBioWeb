@@ -7,10 +7,14 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "predev": "node scripts/generate-config.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/generate-config.mjs",
     "build": "astro build",
+    "postbuild": "node scripts/ping-google.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-config": "node scripts/generate-config.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

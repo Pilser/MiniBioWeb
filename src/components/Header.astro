@@ -70,7 +70,7 @@ const socialLabel: Record<string, string> = {
           url = `mailto:${siteConfig.contactEmail}`
         }
         return (
-          <a href={url} target="_blank" rel="noopener noreferrer" class="link-icon" aria-label={link.label}>
+          <a href={url} target="_blank" rel="noopener noreferrer" class="link-icon" aria-label={link.label} data-track="header_link_click" data-track-label={link.label}>
             <i class={`${prefix} ${cls}`}></i>
           </a>
         )
