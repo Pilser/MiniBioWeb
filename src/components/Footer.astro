@@ -3,98 +3,38 @@ import siteConfig from '../data/site-config.json'
 ---
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="footer-logo">{siteConfig.shortName}</span>
-        <p class="footer-desc">{siteConfig.description}</p>
-        <a href={siteConfig.address.url} target="_blank" rel="noopener noreferrer" class="footer-address">{siteConfig.address.text}</a>
-      </div>
-
-      <div class="footer-links">
-        <span class="footer-heading">Contact</span>
-        <a href={`mailto:${siteConfig.contactEmail}`} class="footer-link">{siteConfig.contactEmail}</a>
-        <a href={`tel:${siteConfig.contactPhone}`} class="footer-link">{siteConfig.contactPhone}</a>
-      </div>
-
-      <div class="footer-links">
-        <span class="footer-heading">Categories</span>
-        {siteConfig.categories.filter(c => c !== 'All').map(cat => (
-          <a href={`/?category=${cat.toLowerCase()}`} class="footer-link">{cat}</a>
-        ))}
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-    </div>
+  <div class="container footer-inner">
+    <span>&copy; {new Date().getFullYear()} {siteConfig.shortName}</span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
   </div>
 </footer>
 
 <style>
   .footer {
     background: var(--gray-900);
-    color: var(--gray-300);
-    padding: 48px 0 24px;
-    margin-top: 80px;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  @media (min-width: 768px) {
-    .footer-grid {
-      grid-template-columns: 2fr 1fr 1fr;
-    }
-  }
-
-  .footer-logo {
-    font-weight: 700;
-    font-size: 20px;
-    color: white;
-  }
-
-  .footer-desc {
-    margin-top: 8px;
-    font-size: 14px;
-    line-height: 1.7;
-    max-width: 400px;
-  }
-
-  .footer-address {
-    margin-top: 8px;
+    color: var(--gray-400);
+    padding: 16px 0;
+    margin-top: 48px;
     font-size: 13px;
-    color: var(--gray-500);
   }
-
-  .footer-heading {
-    font-weight: 600;
-    font-size: 14px;
-    color: white;
-    display: block;
-    margin-bottom: 12px;
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
   }
-
-  .footer-link {
-    display: block;
-    font-size: 14px;
+  .footer a {
     color: var(--gray-400);
     transition: color 0.2s;
-    padding: 4px 0;
   }
-
-  .footer-link:hover {
+  .footer a:hover {
     color: white;
   }
-
-  .footer-bottom {
-    margin-top: 40px;
-    padding-top: 16px;
-    border-top: 1px solid var(--gray-800);
-    font-size: 13px;
-    color: var(--gray-500);
+  .footer-sep {
+    color: var(--gray-600);
   }
 </style>
