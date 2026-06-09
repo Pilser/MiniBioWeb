@@ -7,19 +7,22 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "predev": "node scripts/generate-config.mjs",
+    "predev": "node scripts/generate-config.mjs && node scripts/generate-products.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/generate-config.mjs",
+    "prebuild": "node scripts/generate-config.mjs && node scripts/generate-products.mjs",
     "build": "astro build",
     "postbuild": "node scripts/ping-google.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-config": "node scripts/generate-config.mjs"
+    "generate-config": "node scripts/generate-config.mjs",
+    "generate-products": "node scripts/generate-products.mjs",
+    "generate": "node scripts/generate-config.mjs && node scripts/generate-products.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^6.4.4",
-    "flexsearch": "^0.8.212"
+    "flexsearch": "^0.8.212",
+    "js-yaml": "^4.2.0"
   },
   "devDependencies": {
     "pagefind": "^1.5.2"
